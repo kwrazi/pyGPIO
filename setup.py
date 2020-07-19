@@ -4,7 +4,6 @@ from distutils.command.build_ext import build_ext as _build_ext
 
 import sys, shutil
 
-
 supported_processors = ["sun6i", "sun7i", "sun8i", "Allwinner sun8i Family", "Allwinner sun6i (A31) Family" ]
 
 try:
@@ -19,7 +18,7 @@ def print_green(text):
 	:return: Colored text
 	"""
 
-	return '\033[0;32m' + text + '\033[0m'	
+	return '\033[0;32m' + text + '\033[0m'
 
 def print_yellow(text):
 	"""
@@ -91,74 +90,80 @@ def manual_board_assignment():
 	print ("[6]  A20-OLinuXIno-LIME")
 	print ("[7]  A20-OLinuXIno-LIME2")
 	print ("[8]  NanoPi Duo")
-	print ("[9]  NanoPi Neo")
-	print ("[10] pcDuino3")
-	print ("[11] BananaPi M2")
-	print ("[12] Tritium")
+	print ("[9]  NanoPi Duo2")
+	print ("[10]  NanoPi Neo")
+	print ("[11] pcDuino3")
+	print ("[12] BananaPi M2")
+	print ("[13] Tritium")
 	print ("[99] Abort")
 	var5 = input("")
-	
+
 	if var5 == '1' or var5 == '[1]':
 		shutil.copy2('pyGPIO/gpio/mapping/orangepizero.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '2' or var5 == '[2]':
 		shutil.copy2('pyGPIO/gpio/mapping/orangepipcplus.h', 'pyGPIO/gpio/mapping.h')
 		return
 	elif var5 == '3' or var5 == '[3]':
 		shutil.copy2('pyGPIO/gpio/mapping/orangepiplus2e.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '4' or var5 == '[4]':
 		shutil.copy2('pyGPIO/gpio/mapping/orangepilite.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '5' or var5 == '[5]':
 		shutil.copy2('pyGPIO/gpio/mapping/micro.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '6' or var5 == '[6]':
 		shutil.copy2('pyGPIO/gpio/mapping/lime.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '7' or var5 == '[7]':
 		shutil.copy2('pyGPIO/gpio/mapping/lime2.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
+
 	elif var5 == '8' or var5 == '[8]':
 		var6 = input("Do you want to use your NanoPi Duo with [1] or without minishield [2]\n(mapping & naming in connector mode is incorrect, no changes by using port)?)")
-		if var6 == '2' or var6 == '[2]':				
+		if var6 == '2' or var6 == '[2]':
 			shutil.copy2('pyGPIO/gpio/mapping/nanopiduo.h', 'pyGPIO/gpio/mapping.h')
 		elif var6 == '1' or var6 == '[1]':
 			shutil.copy2('pyGPIO/gpio/mapping/nanopiduo_minishield.h', 'pyGPIO/gpio/mapping.h')
 		else:
 			print ("Abort.")
 			sys.exit(1)
-			
+
 	elif var5 == '9' or var5 == '[9]':
+		print("Assuming NanoPi used without minishield.h")
+		shutil.copy2('pyGPIO/gpio/mapping/nanopiduo2.h', 'pyGPIO/gpio/mapping.h')
+		return
+
+	elif var5 == '10' or var5 == '[10]':
 		shutil.copy2('pyGPIO/gpio/mapping/nanopiduo.h', 'pyGPIO/gpio/mapping.h')
 		return
-		
-	elif var5 == '10' or var5 == '[10]':
+
+	elif var5 == '11' or var5 == '[11]':
 		shutil.copy2('pyGPIO/gpio/mapping/pcduino3.h', 'pyGPIO/gpio/mapping.h')
 		return
-    
-	elif var5 == '11' or var5 == '[11]':
+
+	elif var5 == '12' or var5 == '[12]':
 		shutil.copy2('pyGPIO/gpio/mapping/bananapim2.h', 'pyGPIO/gpio/mapping.h')
 		return
-	
-	elif var5 == '12' or var5 == '[12]':
+
+	elif var5 == '13' or var5 == '[13]':
 		shutil.copy2('pyGPIO/gpio/mapping/tritium.h', 'pyGPIO/gpio/mapping.h')
 		return
-	
+
 	elif var5 == '99' or var5 == '[99]':
 		print ("Abort.")
 		sys.exit(1)
-		
+
 	else:
 		print ("Abort.")
 		sys.exit(1)
-		
+
 def print_annotation_olimex():
 	print ("Pin naming differs from other boards when using port method!")
 
@@ -177,7 +182,7 @@ def check_processor():
 
 			elif "sun5i" in processor:
 				print ("Detected processor: " + print_yellow(processor) + " (Probably Allwinner A13)")
-            
+
 			elif "sun6i" in processor:
 				print ("Detected processor: " + print_yellow(processor) + " (Probably Allwinner A31s)")
 
@@ -217,12 +222,12 @@ def check_board():
 				print ("Detected board: " + print_green("OrangePi Pc Plus"))
 				print_correct()
 				shutil.copy2('pyGPIO/gpio/mapping/orangepipcplus.h', 'pyGPIO/gpio/mapping.h')
-				
+
 			elif "orangepiplus2e" == board:
 				print ("Detected board: " + print_green("OrangePi Plus 2E"))
 				print_correct()
 				shutil.copy2('pyGPIO/gpio/mapping/orangepiplus2e.h', 'pyGPIO/gpio/mapping.h')
-				
+
 			elif "orangepilite" == board:
 				print ("Detected board: " + print_green("OrangePi Lite"))
 				print_correct()
@@ -234,7 +239,7 @@ def check_board():
 				print_correct()
 				shutil.copy2('pyGPIO/gpio/mapping/micro.h', 'pyGPIO/gpio/mapping.h')
 				print_annotation_olimex()
-				
+
 			elif "lime" == board:
 				print ("Detected board: " + print_green("A20-OLinuXIno-LIME"))
 				print_correct()
@@ -252,13 +257,19 @@ def check_board():
 				print ("Detected board: " + print_green("NanoPi Duo"))
 				print_correct()
 				var6 = input("Do you want to use your NanoPi Duo with [1] ore without minishield [2]\n(mapping & naming in connector mode is incorrect, no changes by using port)?)")
-				if var6 == '2' or var6 == '[2]':				
+				if var6 == '2' or var6 == '[2]':
 					shutil.copy2('pyGPIO/gpio/mapping/nanopiduo.h', 'pyGPIO/gpio/mapping.h')
 				elif var6 == '1' or var6 == '[1]':
 					shutil.copy2('pyGPIO/gpio/mapping/nanopiduo_minishield.h', 'pyGPIO/gpio/mapping.h')
 				else:
 					print ("Abort.")
 					sys.exit(1)
+
+			elif "nanopiduo2" == board:
+				print ("Detected board: " + print_green("NanoPi Duo2"))
+				print_correct()
+				print("Assuming NanoPi used without minishield.h")
+				shutil.copy2('pyGPIO/gpio/mapping/nanopiduo2.h', 'pyGPIO/gpio/mapping.h')
 
 			elif "nanopineo" == board:
 				print ("Detected board: NanoPi Neo")
@@ -269,24 +280,23 @@ def check_board():
 			elif "pcduino3" == board:
 				print ("Detected board: pcDuino3")
 				print_correct()
-				shutil.copy2('pyGPIO/gpio/mapping/pcduino3.h', 'pyGPIO/gpio/mapping.h')		
-			
+				shutil.copy2('pyGPIO/gpio/mapping/pcduino3.h', 'pyGPIO/gpio/mapping.h')
+
 			#Sinovoip Boards
-			if "bananapim2" == board:
+			elif "bananapim2" == board:
 				print ("Detected board: " + print_green("Bananapi M2"))
 				print_correct()
 				shutil.copy2('pyGPIO/gpio/mapping/bananapim2.h', 'pyGPIO/gpio/mapping.h')
 
 			#Libre Computer Boards
-			if board in ("tritium-h3", "tritium-h5"):
+			elif board in ("tritium-h3", "tritium-h5"):
 				print ("Detected board: " + print_green("Tritium"))
 				print_correct()
-				shutil.copy2('pyGPIO/gpio/mapping/tritium.h', 'pyGPIO/gpio/mapping.h')			
-				
+				shutil.copy2('pyGPIO/gpio/mapping/tritium.h', 'pyGPIO/gpio/mapping.h')
+
 			else:
 				print ("Unknown board")
 				manual_board_assignment()
-				
 
 			return
 
